@@ -1,11 +1,11 @@
 Class {
-	#name : #OwnershipTransferChannel,
+	#name : #OwnershipTransferPartialReadBarrierChannel,
 	#superclass : #Channel,
 	#category : #Canal
 }
 
 { #category : #sending }
-OwnershipTransferChannel >> send: anObject [ 
+OwnershipTransferPartialReadBarrierChannel >> send: anObject [ 
 	
 	| objectToSend |
 	objectToSend := Object new.

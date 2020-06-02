@@ -8,7 +8,7 @@ Class {
 OwnershipTransferChannelTest >> testOwnership [
 
 | i status |
-i:= OwnershipTransferChannel new.
+i:= OwnershipTransferPartialReadBarrierChannel new.
 status := Channel new.
 [ | object |
 	object := Array new: 10.
