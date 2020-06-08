@@ -33,7 +33,7 @@ files := '/Users/theo/openSMVM/opensmalltalk-vm-1/extracted/plugins/'
 files do: [:f | channelForFiles send: f ].
 
 refactorResult := OrderedCollection new.
-	[refactorResult size equals: files size - 1] whileFalse: [ |toAdd|
+	[refactorResult size = (files size - 1)] whileFalse: [ |toAdd|
 		toAdd:= channelForResult receive.
 		toAdd 
 			ifNotNil:[refactorResult addLast: toAdd.]
