@@ -39,6 +39,11 @@ Channel >> isClosed [
 	^ closed
 ]
 
+{ #category : #testing }
+Channel >> isNotEmpty [
+^queue isNotEmpty
+]
+
 { #category : #accessing }
 Channel >> queue [
 	^ queue

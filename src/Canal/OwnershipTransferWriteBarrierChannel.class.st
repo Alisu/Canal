@@ -8,9 +8,10 @@ Class {
 OwnershipTransferWriteBarrierChannel >> receive [
 	| receivedObject |
 	receivedObject := super receive.
+	receivedObject ifNotNil:[
 	receivedObject beWritableObject.
 	receivedObject owner: Processor activeProcess.
-	receivedObject beReadOnlyObject.
+	receivedObject beReadOnlyObject].
 	^receivedObject 
 	
 ]
