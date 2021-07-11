@@ -7,6 +7,14 @@ Class {
 	#category : #Canal
 }
 
+{ #category : #accessing }
+OwnedObject >> at: anIndex put: anObject [
+
+	self beWritableObject.
+	super at: anIndex put: anObject.
+	self beReadOnlyObject.
+]
+
 { #category : #'write barrier' }
 OwnedObject >> attemptToAssign: value withIndex: index [ 
 
@@ -16,7 +24,7 @@ OwnedObject >> attemptToAssign: value withIndex: index [
 	This method has to return *no* value by jumping to the context's sender"
 	owner ~= Processor activeProcess ifTrue:[^super attemptToAssign: value withIndex: index].
 	self beWritableObject.
-	self instVarAt: index put: value.
+	MirrorPrimitives fixedFieldOf: self at: index put: value.
 	self beReadOnlyObject.
 
 	thisContext sender jump
@@ -27,7 +35,7 @@ OwnedObject >> attemptToAssign: value withIndex: index [
 OwnedObject >> initialize [
 	super initialize.
 	owner:= Processor activeProcess.
-	self beReadOnlyObject.
+	"self beReadOnlyObject."
 ]
 
 { #category : #accessing }
@@ -37,5 +45,13 @@ OwnedObject >> owner [
 
 { #category : #accessing }
 OwnedObject >> owner: anObject [
-	owner := anObject
+	"For the debugger and the inspector it is easier to store activeProcess"
+
+	| activeProcess |
+	activeProcess := Processor activeProcess.
+	self owner = activeProcess
+		ifTrue: [ self beWritableObject.
+			owner := anObject.
+			self beReadOnlyObject ]
+		ifFalse: [ owner := anObject ]
 ]

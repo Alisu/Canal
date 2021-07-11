@@ -16,8 +16,9 @@ OwnershipTransferWriteBarrierChannel >> receive [
 ]
 
 { #category : #sending }
-OwnershipTransferWriteBarrierChannel >> send: anObject [ 
-
-	anObject owner: nil.
-	queue nextPut: anObject
+OwnershipTransferWriteBarrierChannel >> send: anObject [
+	Processor activeProcess = anObject owner
+		ifTrue: [ anObject owner: nil.
+			queue nextPut: anObject ]
+		ifFalse: [ self error ]
 ]

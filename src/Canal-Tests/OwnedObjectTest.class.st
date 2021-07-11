@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : #'*Canal-Tests' }
+OwnedObjectTest >> testC [
+	| channel objectToTransfer objectReceived |
+	
+	channel := OwnershipTransferWriteBarrierChannel new.
+	objectToTransfer := OwnedPerson new name: 'Alice'.
+	[ [ objectReceived := channel receive.
+	channel send: objectReceived ] fork.
+	channel send: objectToTransfer ] bench
+]
+
+{ #category : #'*Canal-Tests' }
 OwnedObjectTest >> testCanModifyObjectwithOwnershipTransferByChannel [
 	
 	| s person canal |
